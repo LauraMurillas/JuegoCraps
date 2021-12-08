@@ -4,7 +4,7 @@ package juegoCraps;
 
 /**
  * ModelCraps apply craps rules
- * estado 1=  natural winner
+ * estado 1= natural winner
  * estado 2= craps looser
  * estado 3= Establish Punto
  * estado 4= Punto winner
@@ -20,7 +20,7 @@ public class ModelCraps {
     //flag es como un contador para saber donde estoy en el codigo
 
     //Esta variable retorna el mensaje en pantalla
-    private String estadoToString;
+    private String[] estadoToString;
 
     //Esta es la sintaxis para decir que ese objeto es de tipo arreglo o vector
     private int[] caras;
@@ -35,6 +35,7 @@ public class ModelCraps {
         dado1 = new Dado();
         dado2 = new Dado();
         flag=0;
+        estadoToString = new String [2];
 
         //Esto dice "El objeto caras es un arreglo de tipo entero de 2 elementos
         caras = new int[2];
@@ -88,21 +89,28 @@ public class ModelCraps {
             estado=4;
             flag=0;
 
-        }
-        if(tiro==7){
-            estado=5;
-            flag=0;
+        }else {
+            if (tiro == 7) {
+                estado = 5;
+                flag = 0;
+            } else {
+                estado=6;
+
+            }
         }
     }
+
 
 
     //Generamos estos metodos por el TIP anterior (Getter)
 
     public int getTiro() {
+
         return tiro;
     }
 
     public int getPunto() {
+
         return punto;
     }
 
@@ -110,28 +118,45 @@ public class ModelCraps {
      * Establish message gome state according to estado atribute value
      * @return message for the view class
      */
-    public String getEstadoToString() {
+    public String[] getEstadoToString() {
         //El switch es un condicional, es una estructura que funciona con enteros y que verifica varios if
         // Case 1 significa que "en caso de que el entero que se introduce es 1"
         //El break siempre debe ir porque sino ejecuta todo de corrido
 
         switch (estado){
-            case 1: estadoToString="Sacaste Natural ¡GANASTE!";
-                break;
+            case 1: estadoToString[0]= "Tiro de Salida= "+tiro;
+                    estadoToString[1]="Sacaste Natural ¡GANASTE!";
+                    break;
 
-            case 2: estadoToString="Sacaste Craps, ¡PERDISTE!";
-                break;
+            case 2: estadoToString[0]= "Tiro de Salida= "+tiro;
+                    estadoToString[1]="Sacaste CRAPS, ¡PERDISTE!";
+                    break;
 
-            case 3: estadoToString="Estableciste "+punto+"" +
+            case 3: estadoToString[0]= "Tiro de Salida= "+tiro+
+                                        "\nTus puntos="+punto;
+                    estadoToString[1]="Estableciste "+punto+
                                     "¡Debes seguir lanzando!"+
                                     "\n pero si sacas 7 antes que"+punto+" vas a perder :(";
-                break;
+                    break;
 
-            case 4: estadoToString="volviste a sacar" +punto+", ¡GANASTE!";
-                break;
+            case 4: estadoToString[0]= "Tiro de Salida= "+punto+
+                                        "\nTus Puntos="+punto
+                                        +"\nValor del nuevo tiro="+tiro;
+                    estadoToString[1]="volviste a sacar" +punto+", ¡GANASTE!";
+                    break;
 
-            case 5: estadoToString="Sacaste 7 antes que "+punto+", ¡PERDISTE!";
-                break;
+            case 5: estadoToString[0]= "Tiro de Salida= "+punto+
+                                        "\nTus Puntos="+punto
+                                        +"\nValor del nuevo tiro="+tiro;
+                    estadoToString[1]="Sacaste 7 antes que "+punto+", ¡PERDISTE!";
+                    break;
+
+            case 6: estadoToString[0]= "Tiro de Salida= "+punto+
+                                        "\nTus Puntos="+punto
+                                        +"\nValor del nuevo tiro="+tiro;
+                    estadoToString[1]="¡Estas en Punto, sigue lanzando!"+
+                                        "\n pero si sacas 7 antes que"+punto+" vas a perder :(";
+                    break;
 
 
         }
@@ -139,6 +164,7 @@ public class ModelCraps {
     }
 
     public int[] getCaras() {
+
         return caras;
     }
 }
